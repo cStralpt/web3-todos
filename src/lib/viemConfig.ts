@@ -23,13 +23,22 @@ export const moonbaseNet = {
   },
 };
 
-export const walletClient = createWalletClient({
-  // account,
-  chain: mainnet,
-  transport: custom((window as any).ethereum),
-});
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
+export let walletClient: any;
+export let publicClient: any;
 
-export const publicClient = createPublicClient({
-  chain: mainnet,
-  transport: custom((window as any).ethereum),
-});
+if (globalThis.window) {
+  publicClient = createPublicClient({
+    chain: mainnet,
+    transport: custom(window?.ethereum),
+  });
+  walletClient = createWalletClient({
+    // account,
+    chain: mainnet,
+    transport: custom(window?.ethereum),
+  });
+}

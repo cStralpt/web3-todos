@@ -10,8 +10,13 @@ export const getWalletAddress = async () => {
   return account[0];
 };
 
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
 export const connectToWallet = async () => {
-  const [account] = await (window as any).ethereum.request({
+  const [account] = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
   return account;

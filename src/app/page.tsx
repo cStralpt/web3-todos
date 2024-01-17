@@ -14,6 +14,11 @@ import {
   getWalletAddress,
 } from "@/utils/smartcontract/blockchainNetwork";
 
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
 export default function Home() {
   type TTodoItem = {
     id: string;
@@ -54,10 +59,18 @@ export default function Home() {
   const debouncedHandleSearchInput = debounce(handleSearchInput, 500);
 
   useEffect(() => {
-    (async () => {
-      setWalletAddress(await getWalletAddress());
-    })();
-    fetchTodos();
+    const fetchData = async () => {
+      try {
+        if (typeof window !== "undefined") {
+          setWalletAddress(await getWalletAddress());
+          fetchTodos();
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
   return (
     <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen bg-no-repeat bg-cover">
