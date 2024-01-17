@@ -1,11 +1,13 @@
-import { publicClient, walletClient } from "@/lib/blockchain";
 import { Abi } from "abitype";
 import abi from "../../lib/todoABI.json";
+import { localNetChain, publicClient, walletClient } from "@/lib/viemConfig";
+import { getWalletAddress } from "./blockchainNetwork";
 
+const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
 export const getAllTodos = async () => {
   const todo = await publicClient.readContract({
     abi: abi as Abi,
-    address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    address: contractAddress,
     functionName: "getAllTodos",
   });
   console.log({ todo });
@@ -14,8 +16,9 @@ export const getAllTodos = async () => {
 
 export const getTodoByName = async (name: string) => {
   const todo = await publicClient.readContract({
+    account: await getWalletAddress(),
     abi: abi as Abi,
-    address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    address: contractAddress,
     functionName: "getTodo",
     args: [name],
   });
@@ -23,25 +26,12 @@ export const getTodoByName = async (name: string) => {
   return todo;
 };
 
-const getAccount = async () => {
-  const [account] = await walletClient.getAddresses();
-  return account;
-};
 export const addTodo = async (name: string, content: string) => {
   const { request } = await publicClient.simulateContract({
-    account: await getAccount(),
-    chain: {
-      id: 1337,
-      name: "LocalNet",
-      nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-      rpcUrls: {
-        default: {
-          http: ["http://localhost:8545"],
-        },
-      },
-    },
+    account: await getWalletAddress(),
+    chain: localNetChain,
     abi: abi as Abi,
-    address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    address: contractAddress,
     functionName: "createTodo",
     args: [name, content],
   });

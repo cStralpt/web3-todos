@@ -2,14 +2,17 @@
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { connectToWallet, walletClient } from "@/lib/blockchain";
 import { useEffect, useState } from "react";
 import {
   addTodo,
   getAllTodos,
   getTodoByName,
-} from "@/utils/smartcontract/todos";
+} from "@/utils/smartcontract/contractReadOrWrite";
 import TodoAction from "@/components/TodoAction";
+import {
+  connectToWallet,
+  getWalletAddress,
+} from "@/utils/smartcontract/blockchainNetwork";
 
 export default function Home() {
   type TTodoItem = {
@@ -19,11 +22,6 @@ export default function Home() {
   };
   const [allTodos, setAllTodos] = useState<TTodoItem[]>([]);
   const [walletAddress, setWalletAddress] = useState<string>();
-  const getAccountAddress = async () => {
-    const address = await walletClient.getAddresses();
-    console.log({ address });
-    return address;
-  };
 
   const fetchTodos = async () => {
     const todos = await getAllTodos();
@@ -56,12 +54,10 @@ export default function Home() {
   const debouncedHandleSearchInput = debounce(handleSearchInput, 500);
 
   useEffect(() => {
+    (async () => {
+      setWalletAddress(await getWalletAddress());
+    })();
     fetchTodos();
-    getAccountAddress()
-      .then((account) => {
-        setWalletAddress(account[0]);
-      })
-      .catch((err) => console.log(err));
   }, []);
   return (
     <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen">
