@@ -1,4 +1,4 @@
-import { createWalletClient, custom, createPublicClient } from "viem";
+import { createWalletClient, custom, createPublicClient, Address } from "viem";
 import { mainnet } from "viem/chains";
 
 export const connectToWallet = async () => {

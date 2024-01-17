@@ -4,7 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { connectToWallet, walletClient } from "@/lib/blockchain";
 import { useEffect, useState } from "react";
-import { getAllTodos } from "@/utils/smartcontract/todos";
+import {
+  addTodo,
+  getAllTodos,
+  getTodoByName,
+} from "@/utils/smartcontract/todos";
+import TodoAction from "@/components/TodoAction";
 
 export default function Home() {
   type TTodoItem = {
@@ -19,10 +24,36 @@ export default function Home() {
     console.log({ address });
     return address;
   };
+
   const fetchTodos = async () => {
     const todos = await getAllTodos();
     setAllTodos(todos as TTodoItem[]);
   };
+
+  const debounce = <F extends (...args: any[]) => any>(
+    func: F,
+    delay: number,
+  ) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return (...args: Parameters<F>) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  const handleSearchInput = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const inputText = event.target.value;
+    if (inputText === "") {
+      fetchTodos();
+    }
+    const todo = (await getTodoByName(inputText)) as TTodoItem;
+    setAllTodos([todo]);
+  };
+
+  const debouncedHandleSearchInput = debounce(handleSearchInput, 500);
 
   useEffect(() => {
     fetchTodos();
@@ -36,7 +67,10 @@ export default function Home() {
     <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen">
       <section className="max-w-7xl flex flex-col w-full gap-4 bg-gradient-to-r from-pink-400 to-pink-600 p-4 rounded-xl">
         <div className="flex gap-4">
-          <Input placeholder="find todo by name" />
+          <Input
+            placeholder="find todo by name"
+            onChange={debouncedHandleSearchInput}
+          />
           <p className="px-4 bg-pink-50 text-xs rounded-md flex items-center justify-center">
             {walletAddress !== undefined ? walletAddress : "loading adress...."}
           </p>
@@ -54,22 +88,19 @@ export default function Home() {
           >
             Refresh Todo
           </Button>
-          <Button
-            onClick={() => alert("add todo!")}
-            variant="outline"
-            className="bg-pink-300 hover:bg-pink-700"
-          >
-            Add Todo
-          </Button>
+          <TodoAction buttonText="Add Todo" todoAction={addTodo} />
         </div>
         <div className="grid grid-cols-4 gap-4">
-          {allTodos.map((todoIetm) => (
-            <Card key={todoIetm.name} className="backdrop-blur bg-white/60">
+          {allTodos.map((todoItem) => (
+            <Card
+              key={`${todoItem.content}+${todoItem.name}`}
+              className="backdrop-blur bg-white/60"
+            >
               <CardHeader>
-                <CardTitle>{todoIetm.name}</CardTitle>
+                <CardTitle>{todoItem.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>{todoIetm.content}</p>
+                <p>{todoItem.content}</p>
               </CardContent>
             </Card>
           ))}
