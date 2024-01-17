@@ -86,20 +86,22 @@ export default function Home() {
           </Button>
           <TodoAction buttonText="Add Todo" todoAction={addTodo} />
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          {allTodos.map((todoItem) => (
-            <Card
-              key={`${todoItem.content}+${todoItem.name}`}
-              className="backdrop-blur bg-white/60"
-            >
-              <CardHeader>
-                <CardTitle>{todoItem.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{todoItem.content}</p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="max-h-[600px] overflow-y-auto overflow-hidde">
+          <div className="grid grid-cols-4 gap-4 pr-2">
+            {allTodos.map((todoItem) => (
+              <Card
+                key={`${todoItem.content}+${todoItem.name}`}
+                className="backdrop-blur bg-white/60"
+              >
+                <CardHeader>
+                  <CardTitle>{todoItem.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>{todoItem.content}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </main>
