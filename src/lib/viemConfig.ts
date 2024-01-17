@@ -12,6 +12,17 @@ export const localNetChain = {
   },
 };
 
+export const moonbaseNet = {
+  id: 1287,
+  name: "Moonbase Alpha",
+  nativeCurrency: { name: "Ether", symbol: "DEV", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.testnet.moonbeam.network"],
+    },
+  },
+};
+
 export const walletClient = createWalletClient({
   // account,
   chain: mainnet,
