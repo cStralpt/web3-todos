@@ -60,7 +60,7 @@ export default function Home() {
     fetchTodos();
   }, []);
   return (
-    <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen">
+    <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen bg-no-repeat bg-cover">
       <section className="max-w-7xl flex flex-col w-full gap-4 bg-gradient-to-r from-pink-400 to-pink-600 p-4 rounded-xl">
         <div className="flex gap-4">
           <Input
