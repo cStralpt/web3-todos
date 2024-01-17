@@ -23,3 +23,11 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Todos Smart Contract
 
 goto https://github.com/cStralpt/todos-smart-contract
+
+## Network Setup
+- Add Moonbase Alphanet to your metamask wallet
+- ![image](https://github.com/cStralpt/web3-todos/assets/95400822/ae6f46fe-3407-4849-a24b-d32b2a5c3dab)
+- Get your Moonbase faucet here:
+- https://chaindrop.org/?chainid=1287&token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+- now u can add a todo with your own account
+
