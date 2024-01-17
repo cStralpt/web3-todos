@@ -13,6 +13,7 @@ import {
   connectToWallet,
   getWalletAddress,
 } from "@/utils/smartcontract/blockchainNetwork";
+import Image from "next/image";
 
 declare global {
   interface Window {
@@ -88,6 +89,7 @@ export default function Home() {
             variant="ghost"
             className="bg-pink-700"
           >
+            <Image src="/metamask.svg" width={20} height={20} alt="metamask" />
             Connect Wallet
           </Button>
           <Button
