@@ -14,6 +14,8 @@ import {
   getWalletAddress,
 } from "@/utils/smartcontract/blockchainNetwork";
 import Image from "next/image";
+import { moonbaseNet, walletClient } from "@/lib/viemConfig";
+import { moonbeam } from "viem/chains";
 
 declare global {
   interface Window {
@@ -98,6 +100,14 @@ export default function Home() {
             className="bg-pink-100 hover:bg-pink-300"
           >
             Refresh Todo
+          </Button>
+          <Button
+            onClick={() => walletClient.addChain({ chain: moonbaseNet })}
+            variant="secondary"
+            className="bg-pink-100 hover:bg-pink-300"
+          >
+            <Image src="/metamask.svg" width={20} height={20} alt="metamask" />
+            Add/Switch to Moonbase Alpha
           </Button>
           <TodoAction buttonText="Add Todo" todoAction={addTodo} />
         </div>
