@@ -27,7 +27,7 @@ goto https://github.com/cStralpt/todos-smart-contract
 
 ## Network Setup
 - Add Moonbase Alphanet to your metamask wallet
-- ![image](https://github.com/cStralpt/web3-todos/assets/95400822/ae6f46fe-3407-4849-a24b-d32b2a5c3dab)
+- ![image](https://github.com/cStralpt/web3-todos/assets/95400822/185fa6a3-7d37-4648-9511-57d1bd607bc7)
 - Get your Moonbase faucet here:
 - https://chaindrop.org/?chainid=1287&token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 - now u can add a todo with your own account
