@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import {
+  TNetworkTarget,
   addTodo,
   getAllTodos,
   getTodoByName,
@@ -14,8 +15,16 @@ import {
   getWalletAddress,
 } from "@/utils/smartcontract/blockchainNetwork";
 import Image from "next/image";
-import { moonbaseNet, walletClient } from "@/lib/viemConfig";
-import { moonbeam } from "viem/chains";
+import { moonbaseNet, berachainTestnet, walletClient } from "@/lib/viemConfig";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { getCurrentNetwork, setCurrentNetwork } from "@/utils/localstorage";
 
 declare global {
   interface Window {
@@ -30,9 +39,12 @@ export default function Home() {
   };
   const [allTodos, setAllTodos] = useState<TTodoItem[]>([]);
   const [walletAddress, setWalletAddress] = useState<string>();
+  const [networkName, setNetworkName] = useState<TNetworkTarget>(
+    getCurrentNetwork() as TNetworkTarget,
+  );
 
   const fetchTodos = async () => {
-    const todos = await getAllTodos();
+    const todos = await getAllTodos(getCurrentNetwork() as TNetworkTarget);
     setAllTodos(todos as TTodoItem[]);
   };
 
@@ -55,11 +67,17 @@ export default function Home() {
     if (inputText === "") {
       fetchTodos();
     }
-    const todo = (await getTodoByName(inputText)) as TTodoItem;
+    const todo = (await getTodoByName(
+      inputText,
+      getCurrentNetwork() as TNetworkTarget,
+    )) as TTodoItem;
     setAllTodos([todo]);
   };
 
   const debouncedHandleSearchInput = debounce(handleSearchInput, 500);
+  useEffect(() => {
+    setCurrentNetwork(networkName);
+  }, [networkName]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,8 +91,12 @@ export default function Home() {
       }
     };
 
+    if (getCurrentNetwork() === null) {
+      setCurrentNetwork("moonbaseNet");
+    }
     fetchData();
   }, []);
+
   return (
     <main className="p-4 flex justify-center flex-col items-center bg-[url('/rose-petals.svg')] h-screen bg-no-repeat bg-cover">
       <section className="max-w-7xl flex flex-col w-full gap-4 bg-gradient-to-r from-pink-400 to-pink-600 p-4 rounded-xl">
@@ -101,14 +123,49 @@ export default function Home() {
           >
             Refresh Todo
           </Button>
-          <Button
-            onClick={() => walletClient.addChain({ chain: moonbaseNet })}
-            variant="secondary"
-            className="bg-pink-100 hover:bg-pink-300"
-          >
-            <Image src="/metamask.svg" width={20} height={20} alt="metamask" />
-            Add/Switch to Moonbase Alpha
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                variant="secondary"
+                className="bg-pink-100 hover:bg-pink-300"
+              >
+                Add/Switch Netwok
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Network List</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  walletClient.addChain({ chain: moonbaseNet });
+                  setNetworkName("moonbaseNet");
+                }}
+              >
+                <Image
+                  src="/metamask.svg"
+                  width={20}
+                  height={20}
+                  alt="metamask"
+                />
+                Moonbase Alpha
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  walletClient.addChain({ chain: berachainTestnet });
+                  setNetworkName("berachainTestnet");
+                }}
+              >
+                <Image
+                  src="/metamask.svg"
+                  width={20}
+                  height={20}
+                  alt="metamask"
+                />
+                Berachain Artio
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <TodoAction buttonText="Add Todo" todoAction={addTodo} />
         </div>
         <div className="max-h-[600px] overflow-y-auto overflow-hidde">

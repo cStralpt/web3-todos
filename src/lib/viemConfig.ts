@@ -23,6 +23,17 @@ export const moonbaseNet = {
   },
 };
 
+export const berachainTestnet = {
+  id: 80085,
+  name: "Berchain Artio",
+  nativeCurrency: { name: "Berachain", symbol: "BERA", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://artio.rpc.berachain.com/"],
+    },
+  },
+};
+
 declare global {
   interface Window {
     ethereum: any;

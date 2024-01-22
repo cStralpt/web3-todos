@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
 import { useState } from "react";
+import { TNetworkTarget } from "@/utils/smartcontract/contractReadOrWrite";
+import { getCurrentNetwork } from "@/utils/localstorage";
 
 export default function TodoAction({
   buttonText,
@@ -23,7 +25,11 @@ export default function TodoAction({
   buttonText: string;
   nameValue?: string;
   contentValue?: string;
-  todoAction: (name: string, content: string) => {};
+  todoAction: (
+    name: string,
+    content: string,
+    networkTarget: TNetworkTarget,
+  ) => {};
 }) {
   const [inputName, setInputName] = useState<string>();
   const [inputContent, setInputContent] = useState<string>();
@@ -75,7 +81,11 @@ export default function TodoAction({
               type="submit"
               onClick={() => {
                 if (inputName !== undefined && inputContent !== undefined) {
-                  todoAction(inputName, inputContent);
+                  todoAction(
+                    inputName,
+                    inputContent,
+                    getCurrentNetwork() as unknown as TNetworkTarget,
+                  );
                 } else {
                   alert("check your input");
                 }
