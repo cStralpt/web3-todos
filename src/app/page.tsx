@@ -94,6 +94,10 @@ export default function Home() {
     if (getCurrentNetwork() === null) {
       setCurrentNetwork("moonbaseNet");
     }
+
+    if (getCurrentNetwork() === "null") {
+      setCurrentNetwork("moonbaseNet");
+    }
     fetchData();
   }, []);
 
