@@ -142,7 +142,7 @@ export default function Home() {
                 }}
               >
                 <Image
-                  src="/metamask.svg"
+                  src="/moonbase-alpha-logo.svg"
                   width={20}
                   height={20}
                   alt="metamask"
@@ -155,13 +155,7 @@ export default function Home() {
                   setNetworkName("berachainTestnet");
                 }}
               >
-                <Image
-                  src="/metamask.svg"
-                  width={20}
-                  height={20}
-                  alt="metamask"
-                />
-                Berachain Artio
+                🐻 Berachain Artio
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
