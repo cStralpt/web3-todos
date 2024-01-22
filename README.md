@@ -30,5 +30,7 @@ goto https://github.com/cStralpt/todos-smart-contract
 - ![image](https://github.com/cStralpt/web3-todos/assets/95400822/185fa6a3-7d37-4648-9511-57d1bd607bc7)
 - Get your Moonbase faucet here:
 - https://chaindrop.org/?chainid=1287&token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+- Get your Berachain Artio faucet here:
+- https://artio.faucet.berachain.com/
 - now u can add a todo with your own account
 
