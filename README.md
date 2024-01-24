@@ -19,15 +19,15 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Preview
-![image](https://github.com/cStralpt/web3-todos/assets/95400822/96b4abb9-4595-48a6-9feb-346f28a29b35)
+![image](https://github.com/cStralpt/web3-todos/assets/95400822/f8162d28-70a1-4e46-8167-226834f15cf2)
 
 ## Todos Smart Contract
 
 goto https://github.com/cStralpt/todos-smart-contract
 
 ## Network Setup
-- Add Moonbase Alphanet to your metamask wallet
-- ![image](https://github.com/cStralpt/web3-todos/assets/95400822/185fa6a3-7d37-4648-9511-57d1bd607bc7)
+- Add Network to your metamask wallet
+- ![image](https://github.com/cStralpt/web3-todos/assets/95400822/226d761d-1f60-4bd9-a6cb-b2a9ef8c5d06)
 - Get your Moonbase faucet here:
 - https://chaindrop.org/?chainid=1287&token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 - Get your Berachain Artio faucet here:
