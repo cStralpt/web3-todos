@@ -34,6 +34,17 @@ export const berachainTestnet = {
   },
 };
 
+export const arbitrumStylus = {
+  id: 23011913,
+  name: "Arbitrum Stylus",
+  nativeCurrency: { name: "Arb", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://stylus-testnet.arbitrum.io/rpc"],
+    },
+  },
+};
+
 declare global {
   interface Window {
     ethereum: any;

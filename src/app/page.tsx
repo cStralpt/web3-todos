@@ -15,7 +15,12 @@ import {
   getWalletAddress,
 } from "@/utils/smartcontract/blockchainNetwork";
 import Image from "next/image";
-import { moonbaseNet, berachainTestnet, walletClient } from "@/lib/viemConfig";
+import {
+  moonbaseNet,
+  berachainTestnet,
+  walletClient,
+  arbitrumStylus,
+} from "@/lib/viemConfig";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -160,6 +165,20 @@ export default function Home() {
                 }}
               >
                 🐻 Berachain Artio
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  walletClient.addChain({ chain: arbitrumStylus });
+                  setNetworkName("arbitrumStylus");
+                }}
+              >
+                <Image
+                  src="/arbitrum-arb-logo.png"
+                  width={20}
+                  height={20}
+                  alt="metamask"
+                />
+                Arbitrum Stylus
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

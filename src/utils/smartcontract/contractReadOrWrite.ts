@@ -1,6 +1,7 @@
 import { Abi } from "abitype";
 import abi from "../../lib/todoABI.json";
 import {
+  arbitrumStylus,
   berachainTestnet,
   moonbaseNet,
   publicClient,
@@ -17,8 +18,15 @@ export const chainList = {
     contractAddress: "0x9c65f85425c619A6cB6D29fF8d57ef696323d188",
     chainConfig: moonbaseNet,
   },
+  arbitrumStylus: {
+    contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    chainConfig: arbitrumStylus,
+  },
 };
-export type TNetworkTarget = "moonbaseNet" | "berachainTestnet";
+export type TNetworkTarget =
+  | "moonbaseNet"
+  | "berachainTestnet"
+  | "arbitrumStylus";
 export const getAllTodos = async (networkTarget: TNetworkTarget) => {
   const todo = await publicClient.readContract({
     abi: abi as Abi,
